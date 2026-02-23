@@ -1,0 +1,25 @@
+;license:MIT
+;(c) 2026 by qkumba
+
+!cpu 6502
+!to "build/PRELAUNCH.INDEXED/SAND.TRAP",plain
+*=$106
+
+    !source "src/macros.a"
+
+         lda   #$60
+         sta   $33C
+         jsr   $300
+         +ENABLE_ACCEL
+         lda   #$60
+         sta   $24D4
+         jsr   $2400      ; decompress
+         lda   #$8D
+         sta   $24D4
+         bit   $c083
+         jsr   DisableAccelerator
+         jmp   $24D4
+
+!if * > PrelaunchMax {
+  !error "code is too large, ends at ", *
+}
