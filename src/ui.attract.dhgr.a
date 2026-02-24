@@ -199,7 +199,6 @@ DHGRTitleCallback
          bmi   DHGRRTS1
 
          +ST16 +
-         +ST16 gNextMegaAttractGame
 
          jsr   FindGame
          ; if game is not found (C will be set here), it means it can't be played on
@@ -207,6 +206,8 @@ DHGRTitleCallback
          ; it in slideshows
          bcs   DHGRRTS1
 
+         +LD16 SRC
+         jsr   SetNextAttractFilename
          +LD16 WINDEX                ; save game index in case user hits RETURN
          +ST16 gGameToLaunch         ; while it's visible (we'll launch it)
          lda   #0
@@ -253,6 +254,8 @@ DHGRActionCallback
          ; it from slideshows
          bcs   DHGRRTS1
 
+         +LD16 SRC
+         jsr   SetNextAttractFilename
          jsr   LoadIndexedDHGRFile
          jsr   DecompressDHGR
 
