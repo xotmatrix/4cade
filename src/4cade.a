@@ -144,6 +144,8 @@ ResetVector                          ; 6 bytes, copied to $100
          !source "src/prodos.path.a"
          !source "src/decrunch/exodecrunch.a"
 
+         !source "src/hw.joystick.poll.a"
+
          ; add new files above here
          !source "src/hw.vbl.a"
          !source "src/ui.wait.a"

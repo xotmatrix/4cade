@@ -69,6 +69,8 @@ WFKF30SLoop
 +
          dec   Timeout
          bne   WFKF30SLoop
+         jsr   PollJoystick              ; poll joystick ~166 times/sec
+         bcs   WAITRTS                   ; C set = joystick input, A = fake key
          dec   Timeout+1
          bne   WFKF30SLoop
          dec   Timeout+2
