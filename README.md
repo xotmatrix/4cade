@@ -1,3 +1,13 @@
+# Joystick Navigation
+
+If a joystick is detected at boot, you can use it to navigate the game catalog:
+
+- Left/Right: browse previous/next game
+- Button 0: launch the selected game
+- Button 1: toggle help overlay
+
+Keyboard navigation continues to work alongside the joystick.
+
 # Is this page for you?
 
 [Download the latest Total Replay disk image](https://archive.org/details/TotalReplay) at the archive.org home page if you just want to play hundreds of Apple II games. The rest of this page is for developers who want to work with the source code and assemble it themselves.
