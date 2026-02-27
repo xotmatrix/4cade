@@ -8,6 +8,12 @@
          !source "src/macros.a"
 
          jmp   main
+*=$10A
+
+callback3
+         cmp   #$DD
+         beq   knownrts
+         jmp   $FDF0
 
 callback2
          jsr   $BD58
@@ -46,7 +52,7 @@ main
          jmp   $B700
 
 callback1
-         lda   #<knownrts
+         lda   #<callback3
          sta   $36
          ldx   #$00
          stx   $9E52
