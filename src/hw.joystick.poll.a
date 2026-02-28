@@ -1,0 +1,99 @@
+;license:MIT
+;(c) 2026
+;
+; Joystick polling for Browse/Search UI
+;
+; Public functions:
+; - PollJoystick
+;
+
+JoyDebounce
+         !byte 0
+
+;------------------------------------------------------------------------------
+; PollJoystick
+; Read joystick X axis and button 0, return a fake keypress if input detected.
+; Called ~166 times/sec from WaitForKeyFor30Seconds (on Timeout rollover).
+;
+; in:    none
+; out:   C set if joystick produced input, A = key code:
+;          $8B (up arrow) for left  = previous game
+;          $8A (down arrow) for right = next game
+;          $8D (Return) for button 0 = launch game
+;          $AF ('/')     for button 1 = toggle help
+;        C clear if no joystick input (center/idle/no joystick/debounce)
+;        X clobbered
+;        Y preserved
+;------------------------------------------------------------------------------
+JOY_THRESH_LEFT  = $40
+JOY_THRESH_RIGHT = $C0
+JOY_DEBOUNCE_DIR = $20                    ; ~190ms at 166Hz = ~5 games/sec
+JOY_DEBOUNCE_BTN = $50                    ; ~480ms for button
+JOY_DEBOUNCE_IDLE = $04                   ; ~24ms between idle reads
+
+PollJoystick
+         lda   MachineStatus
+         and   #HAS_JOYSTICK
+         beq   @no_input
+
+         lda   JoyDebounce
+         beq   @ready
+         dec   JoyDebounce
+@no_input
+         clc
+         rts
+
+@ready
+         ; check button 1 first (help toggle)
+         lda   $C062
+         bmi   @button1
+
+         ; check button 0 (launch game)
+         lda   $C061
+         bmi   @button0
+
+         ; read paddle 0 (X axis)
+         lda   $C070                      ; trigger paddle timer reset
+         ldx   #0
+@loop    lda   $C064                      ; paddle 0
+         bpl   @doneRead
+         inx
+         bne   @loop
+         clc                              ; X wrapped to 0 = no/broken joystick
+         rts
+
+@doneRead
+         cpx   #JOY_THRESH_LEFT
+         bcc   @left
+         cpx   #JOY_THRESH_RIGHT
+         bcs   @right
+
+         ; dead zone - set small debounce to avoid constant paddle reads
+         ldx   #JOY_DEBOUNCE_IDLE
+         stx   JoyDebounce
+         clc
+         rts
+
+@left    ldx   #JOY_DEBOUNCE_DIR
+         stx   JoyDebounce
+         lda   #$8B                       ; up arrow = previous game
+         sec
+         rts
+
+@right   ldx   #JOY_DEBOUNCE_DIR
+         stx   JoyDebounce
+         lda   #$8A                       ; down arrow = next game
+         sec
+         rts
+
+@button0 ldx   #JOY_DEBOUNCE_BTN
+         stx   JoyDebounce
+         lda   #$8D                       ; Return = launch game
+         sec
+         rts
+
+@button1 ldx   #JOY_DEBOUNCE_BTN
+         stx   JoyDebounce
+         lda   #$AF                       ; '/' = toggle help
+         sec
+         rts
