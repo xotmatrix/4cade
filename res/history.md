@@ -1,21 +1,24 @@
 # Total Replay changelog
 
-## Unreleased
+## Revision 6.1 / serial number 20260811
 
-- Add support for Appletini card
+- Add support for Appletini card for displaying super hi-res artwork
 - Add self-running demo for Mario Bros.
+- Add self-running demo for Ms. Pacman
 - Add cheat for Hard Hat Mack ([PR 839](https://github.com/a2-4am/4cade/pull/839), thanks xotmatrix)
+- Add more game help ([PR 854](https://github.com/a2-4am/4cade/pull/854), thanks cybernesto)
 - Add automated testing framework and scripts to verify that all games can launch and reset in various configurations (closes [224](https://github.com/a2-4am/4cade/issues/224), thanks Josh B., Frank M.)
 - Show artwork while launching Kaboom!
 - Show artwork while launching Shufflepuck Cafe (thanks Andrew R.)
 - Show title screen longer while launching Sabotage ([PR 850](https://github.com/a2-4am/4cade/pull/850), thanks Frank M.)
 - Allow additional demos on Apple II+ that were excluded for no good reason ([PR 834](https://github.com/a2-4am/4cade/pull/834), thanks Frank M.)
 - Mark Alcazar as requiring a joystick
+- Mark County Fair as requiring a joystick
 - Fix crash in Alien Munchies demo on some machines
 - Fix crash in Apple Invader on some machines (closes [820](https://github.com/a2-4am/4cade/issues/820))
 - Fix crash in Applz on some machines (closes [825](https://github.com/a2-4am/4cade/issues/825))
 - Fix crash in Crossbow on some machines (closes [852](https://github.com/a2-4am/4cade/issues/852), thanks Frank M.)
-- Fix crash in Dangerous Dave on some machines (closes[847](https://github.com/a2-4am/4cade/issues/847))
+- Fix crash in Dangerous Dave on some machines (closes [847](https://github.com/a2-4am/4cade/issues/847))
 - Fix crash in Genius on some machines (closes [831](https://github.com/a2-4am/4cade/issues/831))
 - Fix crash in Genius 2 on some machines (closes [821](https://github.com/a2-4am/4cade/issues/821))
 - Attempting to launch Genius 3 actually launched Genius 2, which then crashed (closes [822](https://github.com/a2-4am/4cade/issues/822))
@@ -28,6 +31,7 @@
 - Fix crash in Mr. Robot and His Robot Factory when loading or saving custom levels
 - Fix crash in Nibbler (B. Iverson) on some machines (closes [823](https://github.com/a2-4am/4cade/issues/823))
 - Fix crash in Orbitron on some machines (closes [829](https://github.com/a2-4am/4cade/issues/829))
+- Fix crash in Shufflepuck Cafe on some machines (closes [788](https://github.com/a2-4am/4cade/issues/788))
 - Fix crash in Smooth Max on some machines (closes [824](https://github.com/a2-4am/4cade/issues/824))
 - Fix crash in Spy's Demise demo on some machines (closes [790](https://github.com/a2-4am/4cade/issues/790))
 - Fix crash in Phaser Fire demo on some machines (closes [814](https://github.com/a2-4am/4cade/issues/814))
@@ -60,6 +64,7 @@
 - Fix artwork handling while loading Epoch (closes [849](https://github.com/a2-4am/4cade/issues/849))
 - Fix artwork handling while loading Mr. Do
 - Fix missing profiles in Night Mission Pinball (accessible through in-game "FIX" control panel)
+- Fix uninitialized memory access in Crystal Castles, Frogger, and Moon Patrol (bugs in original games)
 
 ## Revision 6.0.1 / serial number 20260605
 
