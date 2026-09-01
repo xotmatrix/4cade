@@ -15,8 +15,8 @@
          bloklo    = $46         ;ProDOS constant
          blokhi    = $47         ;ProDOS constant
 
-         A1L       = $3c
-         A1H       = $3d
+         dirL      = $eb
+         dirH      = $ec
          sizehi    = $53
 
          ;constants
@@ -74,15 +74,15 @@ opendir         ;read volume directory key block
 
 firstent lda   #>dirbuf
          sta   adrhi
-         sta   A2H
+         sta   dirH
          jsr   seekread
          lda   #4
-         sta   A1L
+         sta   dirL
 nextent  ldy   #0
 
          ;match name lengths before attempting to match names
 
-         lda   (A1L), y
+         lda   (dirL), y
          and   #$0f
          tax
          inx
@@ -92,14 +92,14 @@ nextent  ldy   #0
          ;move to next directory in this block
 
          clc
-         lda   A1L
+         lda   dirL
          adc   #$27
-         sta   A1L
+         sta   dirL
          bcc   +
 
          ;there can be only one page crossed, so we can increment instead of adc
 
-         inc   A2H
+         inc   dirH
 +        cmp   #$ff ;4+($27*$0d)
          bne   nextent
 
@@ -111,7 +111,7 @@ nextent  ldy   #0
 
 foundname
          iny
-         lda   (A1L), y
+         lda   (dirL), y
          dex
          bne -
          stx   $ff
@@ -119,10 +119,10 @@ foundname
          ;cache KEY_POINTER
 
          ldy   #$11
-         lda   (A1L), y
+         lda   (dirL), y
          tax
          iny
-         lda   (A1L), y
+         lda   (dirL), y
          tay
 
 readfile jsr   seekread
