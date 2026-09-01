@@ -15,8 +15,8 @@
          bloklo    = $46         ;ProDOS constant
          blokhi    = $47         ;ProDOS constant
 
-         A2L       = $3e
-         A2H       = $3f
+         A1L       = $3c
+         A1H       = $3d
          sizehi    = $53
 
          ;constants
@@ -77,12 +77,12 @@ firstent lda   #>dirbuf
          sta   A2H
          jsr   seekread
          lda   #4
-         sta   A2L
+         sta   A1L
 nextent  ldy   #0
 
          ;match name lengths before attempting to match names
 
-         lda   (A2L), y
+         lda   (A1L), y
          and   #$0f
          tax
          inx
@@ -92,9 +92,9 @@ nextent  ldy   #0
          ;move to next directory in this block
 
          clc
-         lda   A2L
+         lda   A1L
          adc   #$27
-         sta   A2L
+         sta   A1L
          bcc   +
 
          ;there can be only one page crossed, so we can increment instead of adc
@@ -111,7 +111,7 @@ nextent  ldy   #0
 
 foundname
          iny
-         lda   (A2L), y
+         lda   (A1L), y
          dex
          bne -
          stx   $ff
@@ -119,10 +119,10 @@ foundname
          ;cache KEY_POINTER
 
          ldy   #$11
-         lda   (A2L), y
+         lda   (A1L), y
          tax
          iny
-         lda   (A2L), y
+         lda   (A1L), y
          tay
 
 readfile jsr   seekread
