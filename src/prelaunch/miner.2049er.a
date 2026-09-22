@@ -11,6 +11,7 @@
 
 callback
          +DISABLE_ACCEL_AND_HIDE_ARTWORK_LC
+         dec   $BF0E      ; restore LC banking
          jmp   $0918
 
 +
